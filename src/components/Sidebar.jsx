@@ -60,6 +60,12 @@ export default function Sidebar() {
                             <span>Fitur Xyz</span>
                         </NavLink>
                     </li>
+                    <li>
+                        <NavLink id="menu-fitur-xyz2" to="/fitur-xyz2" className={menuClass}>
+                            <FaStar />
+                            <span>Fitur Xyz2</span>
+                        </NavLink>
+                    </li>
 
                     {/* Separator */}
                     <li>
