@@ -15,7 +15,7 @@ export default function FiturXyz2() {
                         Ini Halaman Fitur Xyz2
                     </h2>
                     <p className="text-gray-600">
-                        Halaman ini merupakan template untuk fitur Xyz2
+                        Halaman ini merupakan template untuk fitur Xyz200
                     </p>
                 </div>
             </div>
