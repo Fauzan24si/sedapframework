@@ -1,4 +1,4 @@
-import { FaThLarge, FaList, FaHeadphonesAlt, FaBoxOpen, FaCubes, FaPlus, FaExclamationCircle, FaLock, FaBan, FaStar } from "react-icons/fa";
+import { FaThLarge, FaList, FaHeadphonesAlt, FaBoxOpen, FaCubes, FaPlus, FaExclamationCircle, FaLock, FaBan, FaStar, FaStickyNote } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 
 // Fungsi menuClass menerima props isActive dari NavLink
@@ -64,6 +64,12 @@ export default function Sidebar() {
                         <NavLink id="menu-fitur-xyz2" to="/fitur-xyz2" className={menuClass}>
                             <FaStar />
                             <span>Fitur Xyz2</span>
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink id="menu-notes" to="/notes" className={menuClass}>
+                            <FaStickyNote />
+                            <span>Notes</span>
                         </NavLink>
                     </li>
 
