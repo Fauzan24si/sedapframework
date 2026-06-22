@@ -1,11 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import axios from "axios";
 import { ImSpinner2 } from "react-icons/im";
 import { BsFillExclamationDiamondFill } from "react-icons/bs";
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function Login() {
     const navigate = useNavigate()
+    const { signIn } = useAuth()
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
     const [dataForm, setDataForm] = useState({
@@ -25,34 +26,16 @@ export default function Login() {
         e.preventDefault()
 
         setLoading(true)
-        setError(false)
+        setError("")
 
-    axios
-            .post("https://dummyjson.com/auth/login", {
-                username: dataForm.email,
-                password: dataForm.password,
-            })
-            .then((response) => {
-                // Jika status bukan 200, tampilkan pesan error
-                if (response.status !== 200) {
-                    setError(response.data.message);
-                    return; 
-                }
-
-                // Redirect ke dashboard jika login sukses
-                navigate("/");
-            })
-            .catch((err) => {
-                if (err.response) {
-                    setError(err.response.data.message || "An error occurred");
-                } else {
-                    setError(err.message || "An unknown error occurred");
-                }
-            })
-            .finally(() => {
-                setLoading(false); 
-            });
-
+        try {
+            await signIn(dataForm.email, dataForm.password)
+            navigate("/")
+        } catch (err) {
+            setError(err.message || "Login gagal. Periksa email dan password Anda.")
+        } finally {
+            setLoading(false)
+        }
     }
 
     const errorInfo = error ? (

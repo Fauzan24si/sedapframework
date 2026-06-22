@@ -17,34 +17,54 @@ const Login = React.lazy(() => import("./pages/auth/Login"))
 const Register = React.lazy(() => import("./pages/auth/Register"))
 const Forgot = React.lazy(() => import("./pages/auth/Forgot"))
 const Loading = React.lazy(() => import("./components/Loading"))
+const ProtectedRoute = React.lazy(() => import("./components/ProtectedRoute"))
+const MemberDashboard = React.lazy(() => import("./pages/main/MemberDashboard"))
+const PlaceOrder = React.lazy(() => import("./pages/main/PlaceOrder"))
+const MyOrders = React.lazy(() => import("./pages/main/MyOrders"))
 function App() {
     return (
         <Suspense fallback={<Loading />}>
-                    <Routes>
-            <Route path="/" element={<MainLayout />}>
-                <Route index element={<Dashboard />} />
-                <Route path="orders" element={<Orders />} />
-                <Route path="customers" element={<Customers />} />
-                <Route path="products" element={<Products />} />
-                <Route path="products/:id" element={<ProductDetail />} />
-                <Route path="components" element={<ComponentPage />} />
-                <Route path="fitur-xyz" element={<FiturXyz />} />
-                <Route path="fitur-xyz2" element={<FiturXyz2 />} />
-                <Route path="notes" element={<Notes />} />
-
-                <Route path="error/400" element={<ErrorPage errorCode={400} />} />
-                <Route path="error/401" element={<ErrorPage errorCode={401} />} />
-                <Route path="error/403" element={<ErrorPage errorCode={403} />} />
-            </Route>
-
-                <Route element={<AuthLayout/>}>
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register/>} />
-                <Route path="/forgot" element={<Forgot/>} />
+            <Routes>
+                {/* Admin Routes */}
+                <Route path="/" element={
+                    <ProtectedRoute allowedRoles={['admin']}>
+                        <MainLayout />
+                    </ProtectedRoute>
+                }>
+                    <Route index element={<Dashboard />} />
+                    <Route path="orders" element={<Orders />} />
+                    <Route path="customers" element={<Customers />} />
+                    <Route path="products" element={<Products />} />
+                    <Route path="products/:id" element={<ProductDetail />} />
+                    <Route path="components" element={<ComponentPage />} />
+                    <Route path="fitur-xyz" element={<FiturXyz />} />
+                    <Route path="fitur-xyz2" element={<FiturXyz2 />} />
+                    <Route path="notes" element={<Notes />} />
+                    <Route path="error/400" element={<ErrorPage errorCode={400} />} />
+                    <Route path="error/401" element={<ErrorPage errorCode={401} />} />
+                    <Route path="error/403" element={<ErrorPage errorCode={403} />} />
                 </Route>
 
-            <Route path="*" element={<NotFound />} />
-        </Routes>
+                {/* Member Routes */}
+                <Route path="/member" element={
+                    <ProtectedRoute allowedRoles={['member']}>
+                        <MainLayout />
+                    </ProtectedRoute>
+                }>
+                    <Route index element={<MemberDashboard />} />
+                    <Route path="order" element={<PlaceOrder />} />
+                    <Route path="orders" element={<MyOrders />} />
+                </Route>
+
+                {/* Auth Routes */}
+                <Route element={<AuthLayout/>}>
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register/>} />
+                    <Route path="/forgot" element={<Forgot/>} />
+                </Route>
+
+                <Route path="*" element={<NotFound />} />
+            </Routes>
         </Suspense>
     );
 }

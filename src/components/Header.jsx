@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
-import { FaBell, FaSearch, FaHistory, FaMoon, FaSun } from "react-icons/fa";
+import { FaBell, FaSearch, FaHistory, FaMoon, FaSun, FaSignOutAlt } from "react-icons/fa";
 import { FcAreaChart } from "react-icons/fc";
 import { SlSettings } from "react-icons/sl";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function Header() {
 	const [isSearchOpen, setIsSearchOpen] = useState(false);
 	const [isDarkMode, setIsDarkMode] = useState(false);
+	const { profile, signOut } = useAuth();
 
 	// Load status dark mode dari localStorage saat pertama kali komponen dirender
 	useEffect(() => {
@@ -93,7 +95,7 @@ export default function Header() {
 				{/* Profile Section */}
 				<div id="profile-container" className="hover:bg-gray-50 p-2 rounded-lg cursor-pointer transition-colors">
 					<span id="profile-text">
-						Halo, <b>Fauzan</b>
+						Halo, <b>{profile?.full_name || 'Guest'}</b>
 					</span>
 					<img
 						id="profile-avatar"
@@ -101,6 +103,17 @@ export default function Header() {
 						className="w-10 h-10 rounded-full object-cover shadow-sm"
 						alt="Profile avatar"
 					/>
+				</div>
+
+				{/* Logout Button */}
+				<div
+					id="logout-button"
+					onClick={signOut}
+					className="flex items-center gap-2 px-3 py-2 text-red-500 hover:bg-red-50 rounded-lg cursor-pointer transition-colors"
+					title="Logout"
+				>
+					<FaSignOutAlt />
+					<span className="text-sm font-medium">Logout</span>
 				</div>
 			</div>
 		</div>
